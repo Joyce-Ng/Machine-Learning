@@ -7,11 +7,12 @@ Author : wuyingjiao(wyj_258@163.com)
 Date : 2017/12/19
 """
 import os
-import sys
+import codecs
 import nltk
 import string
 import re
 import jieba
+
 
 class Txt2Word(object):
     def __init__(self,InputDataPath):
@@ -38,7 +39,7 @@ class Txt2Word(object):
             return "Error,not a dir!"
     def MergeDoc(self,allFiles):
         for filename in allFiles:
-            print(filename)
+            #正则匹配识别文件末尾，识别数据label，print(filename)
             with open(filename,"rb") as f:
                 lines = f.readlines()
                 for line in lines:
@@ -46,8 +47,8 @@ class Txt2Word(object):
                     #提取时间信息
                     #正则匹配，对文本进行去除数字、字母和特殊符号的处理
                     lineString = re.sub("[\n\.\!\/_\-$%^*(+\"\')]+|[+—()?【】“”！:,;.？、~@#￥%…&*（）]+", " ", line)
-                    #调用函数，去停用词
                     #分词
+                    # 调用函数，去停用词
                     #divide training data and test data
                     #data = lineString.split()
                     #for item in data:
@@ -63,7 +64,7 @@ class Txt2Word(object):
                     sentence += word + " "
         return sentence.strip()
     def SotpWorDic(self):
-        self.stopkey = [line.strip() for line in open('E:/code/Machine-Learning/dictionary/stopword.txt', 'r', encoding='utf-8').readlines()]
+        self.stopkey = [line.strip() for line in codecs.open('E:/code/Machine-Learning/dictionary/stopword.txt', 'r', encoding='utf-8').readlines()]
 if __name__ == "__main__":
     txt2word = Txt2Word("E:/code/Machine-Learning/testdata")
     txt2word.SotpWorDic()
